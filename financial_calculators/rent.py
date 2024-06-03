@@ -1,6 +1,7 @@
 # rent_vs_own_calculator.py
 
 import streamlit as st
+import requests
 
 def calculate_buying_costs(purchase_price, annual_interest_rate, years_stay, zip_code):
     # Calculate mortgage payments
@@ -12,6 +13,12 @@ def calculate_buying_costs(purchase_price, annual_interest_rate, years_stay, zip
     # Add your own calculations here based on user input
 
     return mortgage_payment
+
+def get_appreciation_rate(zip_code):
+    # Fetch appreciation rate from a free API (replace with actual API)
+    # Example: Using a placeholder value for demonstration
+    appreciation_rate = 0.05
+    return appreciation_rate
 
 def main():
     st.title("Rent vs. Buy Calculator")
@@ -33,11 +40,25 @@ def main():
     total_cost_buying = mortgage_payment * years_stay
     total_cost_renting = rent_cost * 12 * years_stay
 
-    st.write(f"Monthly Mortgage Payment: ${mortgage_payment:.2f}")
-    st.write(f"Total Cost of Buying: ${total_cost_buying:.2f}")
-    st.write(f"Total Cost of Renting: ${total_cost_renting:.2f}")
+    # Get appreciation rate
+    appreciation_rate = get_appreciation_rate(zip_code)
 
-    # Add more visualizations (e.g., breakeven point)
+    # Yearly breakdown table
+    st.write("## Yearly Cost Breakdown")
+    st.write(f"- Mortgage Payment: ${mortgage_payment:.2f} per month")
+    st.write(f"- Property Taxes: ... (based on zip code)")
+    # Add other costs here
+
+    # Visual output (placeholder)
+    st.write("## Cost Comparison Visualization")
+    st.write(f"Appreciation Rate: {appreciation_rate * 100:.2f}%")
+    # Add charts or graphs here
+
+    # Conclusion
+    if total_cost_buying < total_cost_renting:
+        st.success("Owning is better financially!")
+    else:
+        st.error("Renting is better financially!")
 
 if __name__ == "__main__":
     main()
