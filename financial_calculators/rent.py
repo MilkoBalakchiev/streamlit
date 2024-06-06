@@ -23,10 +23,16 @@ def get_appreciation_rate(zip_code):
 def main():
     st.title("Rent vs. Buy Calculator")
 
+    # Set default values
+    default_purchase_price = 600000
+    default_interest_rate = 3.5  # Average interest rate banks charge
+    default_years_stay = 5
+    default_rent_increase = 3.0
+
     # Collect user inputs
-    purchase_price = st.number_input("Purchase Price ($)", min_value=1)
-    annual_interest_rate = st.slider("Annual Interest Rate (%)", min_value=0.0, max_value=10.0, step=0.1)
-    years_stay = st.slider("Years You Plan to Stay", min_value=1, max_value=30)
+    purchase_price = st.number_input("Purchase Price ($)", min_value=1, value=default_purchase_price)
+    annual_interest_rate = st.slider("Annual Interest Rate (%)", min_value=0.0, max_value=10.0, step=0.1, value=default_interest_rate)
+    years_stay = st.slider("Years You Plan to Stay", min_value=1, max_value=30, value=default_years_stay)
     zip_code = st.text_input("Zip Code")
 
     # Calculate buying costs
@@ -34,7 +40,7 @@ def main():
 
     # Collect renting costs
     rent_cost = st.number_input("Monthly Rent ($)", min_value=1)
-    rent_increase = st.slider("Yearly Rent Increase (%)", min_value=0.0, max_value=10.0, step=0.1)
+    rent_increase = st.slider("Yearly Rent Increase (%)", min_value=0.0, max_value=10.0, step=0.1, value=default_rent_increase)
 
     # Compare costs
     total_cost_buying = mortgage_payment * years_stay
@@ -56,9 +62,9 @@ def main():
 
     # Conclusion
     if total_cost_buying < total_cost_renting:
-        st.success("Owning is better financially!")
+        st.success("**Owning is better financially!**")
     else:
-        st.error("Renting is better financially!")
+        st.error("**Renting is better financially!**")
 
 if __name__ == "__main__":
     main()
